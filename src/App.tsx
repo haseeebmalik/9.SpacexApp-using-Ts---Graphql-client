@@ -1,26 +1,43 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import LaunchContainer from "./components/LaunchIndex";
+import LaunchDetailsContainer from "./components/LaunchDetails";
+import Launch from "./components/Launch/Launch";
+import Home from "./components/home/Home";
+import AppBar1 from "./components/AppBar/AppBar";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link,
+  useNavigate,
+} from "react-router-dom";
 
-function App() {
+const App = () => {
+  let [index, setIndex] = useState(1);
+  function passIndex(getInd: number) {
+    setIndex(getInd);
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <AppBar1 />
+
+      <div>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="Launch" element={<Launch />}>
+            <Route
+              path="/"
+              element={<LaunchContainer passIndex={passIndex} />}
+            />
+            <Route
+              path=":slug"
+              element={<LaunchDetailsContainer index={index} />}
+            />
+          </Route>
+        </Routes>
+      </div>
     </div>
   );
-}
+};
 
 export default App;

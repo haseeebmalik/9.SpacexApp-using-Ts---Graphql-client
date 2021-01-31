@@ -1,14 +1,34 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link,
+  useNavigate,
+} from "react-router-dom";
+import {
+  gql,
+  ApolloProvider,
+  InMemoryCache,
+  ApolloClient,
+} from "@apollo/client";
+import reportWebVitals from "./reportWebVitals";
 
+const client = new ApolloClient({
+  uri: "https://spacexdata.herokuapp.com/graphql",
+  cache: new InMemoryCache(),
+});
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+  <ApolloProvider client={client}>
+    <Router>
+      <App />
+    </Router>
+  </ApolloProvider>,
+
+  document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function
